@@ -1,4 +1,6 @@
 using electronics.Data;
+using electronics.Interfaces;
+using electronics.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +37,10 @@ namespace electronics
             });
 
             services.AddControllers();
+
+            services.AddTransient<ICategory, CategoryRepository>();
+            services.AddTransient<IProduct, ProductRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
