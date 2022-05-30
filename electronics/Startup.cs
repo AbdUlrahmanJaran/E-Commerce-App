@@ -30,6 +30,9 @@ namespace electronics
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddMvc();
+
             services.AddDbContext<ElectronicsDbContext>(options =>
             {
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -51,16 +54,14 @@ namespace electronics
                 app.UseDeveloperExceptionPage();
             }
 
+            // Allows the use of static files like css and js
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
             });
         }
     }
