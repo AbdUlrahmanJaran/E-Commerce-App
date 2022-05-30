@@ -1,0 +1,18 @@
+﻿@using electronics.Models
+@model List<Category>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<ul>
+        @foreach(var item in Model)
+    {
+       <li>
+           <a >
+               Category: @item.Name
+               <br>
+               Information: @item.Info
+               <br><br>
+            </a>
+
+        </li>
+    }
+</ul>
