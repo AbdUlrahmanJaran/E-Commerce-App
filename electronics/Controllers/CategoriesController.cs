@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using electronics.Data;
 using electronics.Models;
+using electronics.Interfaces;
+using electronics.DTOs;
 
 namespace electronics.Controllers
 {
@@ -14,32 +16,27 @@ namespace electronics.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ElectronicsDbContext _context;
+        private readonly ICategory _category;
 
-        public CategoriesController(ElectronicsDbContext context)
+        public CategoriesController(ICategory category)
         {
-            _context = context;
+            _category = category;
         }
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            var categories = await _category.GetCategories();
+            return Ok(categories);
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategory(int id)
+        public async Task<ActionResult<CategoryDTO>> GetCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return category;
+            CategoryDTO categoryDTO = await _category.GetCategory(id);
+            return Ok(categoryDTO);
         }
 
         // PUT: api/Categories/5
@@ -52,34 +49,17 @@ namespace electronics.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(category).State = EntityState.Modified;
+            var updatedCategory = await _category.UpdateCategory(id, category);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(updatedCategory);
         }
 
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
+        public async Task<ActionResult<Category>> PostCategory(CategoryDTO categoryDTO)
         {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+            Category category = await _category.AddCategory(categoryDTO);
 
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
@@ -88,21 +68,8 @@ namespace electronics.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-
+            await _category.DeleteCategory(id);
             return NoContent();
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return _context.Categories.Any(e => e.Id == id);
         }
     }
 }
