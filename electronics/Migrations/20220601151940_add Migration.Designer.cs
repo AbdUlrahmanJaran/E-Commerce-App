@@ -10,8 +10,8 @@ using electronics.Data;
 namespace Electronics.Migrations
 {
     [DbContext(typeof(ElectronicsDbContext))]
-    [Migration("20220601142731_addedCategoryAndProduct2")]
-    partial class addedCategoryAndProduct2
+    [Migration("20220601151940_add Migration")]
+    partial class addMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,20 @@ namespace Electronics.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Info = "A lot of Laptops",
+                            Name = "Laptops"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Info = "A lot of Mobiles",
+                            Name = "Mobiles"
+                        });
                 });
 
             modelBuilder.Entity("Electronics.Models.Product", b =>

@@ -35,6 +35,20 @@ namespace Electronics.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Info = "A lot of Laptops",
+                            Name = "Laptops"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Info = "A lot of Mobiles",
+                            Name = "Mobiles"
+                        });
                 });
 
             modelBuilder.Entity("Electronics.Models.Product", b =>

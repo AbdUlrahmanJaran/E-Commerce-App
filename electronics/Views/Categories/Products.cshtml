@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Electronics.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h4>Products of Category @Model.FirstOrDefault().CategoryId</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MakerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AboutProduct)
+            </th>       
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MakerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AboutProduct) 
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.Price) JD
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-action="Details" asp-route-id="@Model.FirstOrDefault().CategoryId">Back to List</a>

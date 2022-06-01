@@ -43,6 +43,14 @@ namespace Electronics.Controllers
             return View(category);
         }
 
+        // GET: Categories/Products
+        public async Task<IActionResult> Products(int id)
+        {
+            return View(await _context.Products
+                .Where(m => m.CategoryId == id).ToListAsync());
+
+        }
+
         // GET: Categories/Create
         public IActionResult Create()
         {

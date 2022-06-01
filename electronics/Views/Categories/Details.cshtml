@@ -23,6 +23,7 @@
             @Html.DisplayFor(model => model.Info)
         </dd>
     </dl>
+    <h5> <a asp-action="Products" asp-route-id="@Model.Id">Products</a> </h5>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
