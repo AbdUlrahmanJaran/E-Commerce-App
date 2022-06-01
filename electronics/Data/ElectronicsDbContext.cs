@@ -19,9 +19,12 @@ namespace electronics.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Laptops", Info = "A lot of Laptops"},
+                new Category { Id = 2, Name = "Mobiles", Info = "A lot of Mobiles" }
+                );
 
-            modelBuilder.Entity<Product>().HasData(
+          modelBuilder.Entity<Product>().HasData(
                 new Product { Id = 1, CategoryId = 1, MakerName = "Asus", SubName = "XO2022", AboutProduct = "1tb SSD storage, 2x8 ddr4 ram 3000mhz, i5-10th, nvidia mx230", Price = 799.9, ReleaseDate = new DateTime(2022, 1, 22) },
 
                 new Product { Id = 2, CategoryId = 1, MakerName = "Apple", SubName = "Mac 2019", AboutProduct = "500gb SSD storage, 8 ddr4 ram 3666mhz", Price = 999.9, ReleaseDate = new DateTime(2019, 6, 1) },
