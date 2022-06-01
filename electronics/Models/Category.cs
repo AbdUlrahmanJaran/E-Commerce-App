@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace electronics.Models
+
+namespace Electronics.Models
 {
     public class Category
     {

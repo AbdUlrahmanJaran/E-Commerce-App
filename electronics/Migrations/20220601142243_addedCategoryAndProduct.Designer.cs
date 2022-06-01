@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using electronics.Data;
 
 namespace Electronics.Migrations
 {
     [DbContext(typeof(ElectronicsDbContext))]
-    partial class ElectronicsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220601142243_addedCategoryAndProduct")]
+    partial class addedCategoryAndProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,48 +69,6 @@ namespace Electronics.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AboutProduct = "1tb SSD storage, 2x8 ddr4 ram 3000mhz, i5-10th, nvidia mx230",
-                            CategoryId = 1,
-                            MakerName = "Asus",
-                            Price = 799.89999999999998,
-                            ReleaseDate = new DateTime(2022, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SubName = "XO2022"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AboutProduct = "500gb SSD storage, 8 ddr4 ram 3666mhz",
-                            CategoryId = 1,
-                            MakerName = "Apple",
-                            Price = 999.89999999999998,
-                            ReleaseDate = new DateTime(2019, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SubName = "Mac 2019"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AboutProduct = "128gb storage",
-                            CategoryId = 2,
-                            MakerName = "Apple",
-                            Price = 650.0,
-                            ReleaseDate = new DateTime(2019, 8, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SubName = "Iphone 11"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AboutProduct = "128gb storage, 6gb ram",
-                            CategoryId = 2,
-                            MakerName = "Poco",
-                            Price = 199.90000000000001,
-                            ReleaseDate = new DateTime(2021, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SubName = "X3 NFC"
-                        });
                 });
 
             modelBuilder.Entity("Electronics.Models.Product", b =>
