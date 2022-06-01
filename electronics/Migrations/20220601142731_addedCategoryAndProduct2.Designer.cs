@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using electronics.Data;
 
-namespace electronics.Migrations
+namespace Electronics.Migrations
 {
     [DbContext(typeof(ElectronicsDbContext))]
-    [Migration("20220530041718_initial1")]
-    partial class initial1
+    [Migration("20220601142731_addedCategoryAndProduct2")]
+    partial class addedCategoryAndProduct2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace electronics.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("electronics.Models.Category", b =>
+            modelBuilder.Entity("Electronics.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,23 +37,9 @@ namespace electronics.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Info = "Browse a wide selection of laptops from different Makers",
-                            Name = "Laptops"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Info = "Browse a wide selection of Phones from different Makers",
-                            Name = "Mobile Phones"
-                        });
                 });
 
-            modelBuilder.Entity("electronics.Models.Product", b =>
+            modelBuilder.Entity("Electronics.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -127,9 +113,9 @@ namespace electronics.Migrations
                         });
                 });
 
-            modelBuilder.Entity("electronics.Models.Product", b =>
+            modelBuilder.Entity("Electronics.Models.Product", b =>
                 {
-                    b.HasOne("electronics.Models.Category", "Category")
+                    b.HasOne("Electronics.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -138,7 +124,7 @@ namespace electronics.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("electronics.Models.Category", b =>
+            modelBuilder.Entity("Electronics.Models.Category", b =>
                 {
                     b.Navigation("Products");
                 });

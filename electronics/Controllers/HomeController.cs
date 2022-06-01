@@ -1,46 +1,37 @@
-﻿using electronics.Data;
-using electronics.DTOs;
-using electronics.Models;
-using electronics.Services;
+﻿using Electronics.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace electronics.Controllers
+namespace Electronics.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-
-        public IActionResult Categories()
+        public IActionResult Privacy()
         {
-            List<Category> categories = new List<Category>();
-
-            categories.Add(new Category() { Name = "Laptops", Info = "A wide selection of carried computers" });
-            categories.Add(new Category() { Name = "Mobiles", Info = "A wide selection of mobile devices" });
-            categories.Add(new Category() { Name = "Accessories", Info = "From mousepad to professional PC cases" });
-            categories.Add(new Category() { Name = "Cameras", Info = "Your journy to become a photographer starts here" });
-
-
-            return View(categories);
+            return View();
         }
 
-        public IActionResult Products()
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
         {
-            List<Product> products = new List<Product>();
-
-            products.Add(new Product() { MakerName = "Apple", SubName = "Iphone12", Price = 699.9 });
-            products.Add(new Product() { MakerName = "Dell", SubName = "Inspiron", Price = 450.0 });
-            products.Add(new Product() { MakerName = "Lenovo", SubName = "XNY", Price = 450.0 });
-            products.Add(new Product() { MakerName = "Poco", SubName = "X3 NFC", Price = 230.0 });
-            products.Add(new Product() { MakerName = "Logitech", SubName = "g402", Price = 45.0 });
-            products.Add(new Product() { MakerName = "Apple", SubName = "iMac", Price = 2019.0 });
-
-
-            return View(products);
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
