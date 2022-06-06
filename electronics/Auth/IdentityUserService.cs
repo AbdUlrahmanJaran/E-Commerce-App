@@ -66,16 +66,17 @@ namespace Electronics.Auth
             {
                 return null;
             }
-                var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
 
-                if (result.Succeeded)
+            var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
+
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByNameAsync(username);
+                return new UserDTO
                 {
-                    var user = await _userManager.FindByNameAsync(username);
-                    return new UserDTO
-                    {
-                        Username = user.UserName
-                    };
-                }
+                    Username = user.UserName
+                };
+            }
 
 
             return null;
