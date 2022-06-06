@@ -1,10 +1,12 @@
-﻿using Electronics.Models;
+﻿using Electronics.Auth.Model;
+using Electronics.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace electronics.Data
 {
-    public class ElectronicsDbContext : DbContext
+    public class ElectronicsDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Category> Categories { get; set; }
 
@@ -19,6 +21,8 @@ namespace electronics.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Laptops", Info = "A lot of Laptops"},
                 new Category { Id = 2, Name = "Mobiles", Info = "A lot of Mobiles" }
