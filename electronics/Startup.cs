@@ -2,6 +2,7 @@ using electronics.Data;
 using Electronics.Auth;
 using Electronics.Auth.Interfaces;
 using Electronics.Auth.Model;
+using Electronics.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -79,6 +80,9 @@ namespace Electronics
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //This creates 2 roles with 2 users!
+            Initializer.SeedUsersAndRolesAsync(app).Wait();
         }
     }
 }
