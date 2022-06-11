@@ -10,8 +10,8 @@ using electronics.Data;
 namespace Electronics.Migrations
 {
     [DbContext(typeof(ElectronicsDbContext))]
-    [Migration("20220606143134_initial")]
-    partial class initial
+    [Migration("20220606171022_addMigration")]
+    partial class addMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
