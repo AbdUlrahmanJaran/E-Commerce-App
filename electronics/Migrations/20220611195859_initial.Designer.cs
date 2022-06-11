@@ -10,8 +10,8 @@ using electronics.Data;
 namespace Electronics.Migrations
 {
     [DbContext(typeof(ElectronicsDbContext))]
-    [Migration("20220606171022_addMigration")]
-    partial class addMigration
+    [Migration("20220611195859_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,6 +144,9 @@ namespace Electronics.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SubName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("URL")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

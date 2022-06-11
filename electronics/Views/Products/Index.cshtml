@@ -17,6 +17,12 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.URL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MakerName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.MakerName)
             </th>
             <th>
@@ -40,6 +46,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                <img src="@Html.DisplayFor(modelItem => item.URL)" width=250/>
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MakerName)
             </td>

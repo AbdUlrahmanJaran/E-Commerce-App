@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Electronics.Models;
 using electronics.Data;
+using Microsoft.AspNetCore.Http;
+using Azure.Storage.Blobs;
+using Microsoft.Extensions.Configuration;
+using Azure.Storage.Blobs.Models;
 
 namespace Electronics.Controllers
 {
@@ -14,9 +18,12 @@ namespace Electronics.Controllers
     {
         private readonly ElectronicsDbContext _context;
 
-        public ProductsController(ElectronicsDbContext context)
+        IConfiguration Configuration;
+
+        public ProductsController(ElectronicsDbContext context, IConfiguration config)
         {
             _context = context;
+            Configuration = config;
         }
 
         // GET: Products
@@ -57,8 +64,35 @@ namespace Electronics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CategoryId,MakerName,SubName,AboutProduct,ReleaseDate,Price")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,CategoryId,MakerName,SubName,AboutProduct,ReleaseDate,Price")] Product product, IFormFile file)
         {
+            // Blob Part
+
+            BlobContainerClient container = new BlobContainerClient(Configuration.GetConnectionString("AzureBlob"), "attachments");
+            await container.CreateIfNotExistsAsync();
+            BlobClient blob = container.GetBlobClient(file.FileName);
+            using var stream = file.OpenReadStream();
+
+            BlobUploadOptions options = new BlobUploadOptions()
+            {
+                HttpHeaders = new BlobHttpHeaders() { ContentType = file.ContentType }
+            };
+
+            if (!blob.Exists())
+            {
+                await blob.UploadAsync(stream, options);
+            }
+
+            product.URL = blob.Uri.ToString();
+
+
+            stream.Close();
+
+
+
+
+            // Creating part
+
             if (ModelState.IsValid)
             {
                 _context.Add(product);
@@ -66,8 +100,13 @@ namespace Electronics.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
+
             return View(product);
         }
+
+
+
+
 
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)

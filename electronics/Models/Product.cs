@@ -27,5 +27,7 @@ namespace Electronics.Models
 
         public double Price { get; set; }
 
+        public string URL { get; set; }
+
     }
 }
