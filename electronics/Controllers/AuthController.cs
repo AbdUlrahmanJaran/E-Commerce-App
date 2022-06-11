@@ -17,7 +17,7 @@ namespace Electronics.Controllers
         {
             return View();
         }
-
+        
         public async Task<ActionResult<UserDTO>> Login(LoginDTO login)
         {
             var user = await _userService.Authenticate(login.Username, login.Password);

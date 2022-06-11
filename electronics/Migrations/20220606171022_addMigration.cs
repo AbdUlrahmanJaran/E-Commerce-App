@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Electronics.Migrations
 {
-    public partial class initial : Migration
+    public partial class addMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
