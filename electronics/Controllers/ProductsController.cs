@@ -68,7 +68,7 @@ namespace Electronics.Controllers
         {
             // Blob Part
 
-            BlobContainerClient container = new BlobContainerClient(Configuration.GetConnectionString("AzureBlob"), "attachments");
+            BlobContainerClient container = new BlobContainerClient(Configuration.GetConnectionString("AzureBlob"), "images");
             await container.CreateIfNotExistsAsync();
             BlobClient blob = container.GetBlobClient(file.FileName);
             using var stream = file.OpenReadStream();
