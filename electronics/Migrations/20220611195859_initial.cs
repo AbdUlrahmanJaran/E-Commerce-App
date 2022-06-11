@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Electronics.Migrations
 {
-    public partial class addMigration : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -178,7 +178,8 @@ namespace Electronics.Migrations
                     SubName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AboutProduct = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false)
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -203,13 +204,13 @@ namespace Electronics.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "AboutProduct", "CategoryId", "MakerName", "Price", "ReleaseDate", "SubName" },
+                columns: new[] { "Id", "AboutProduct", "CategoryId", "MakerName", "Price", "ReleaseDate", "SubName", "URL" },
                 values: new object[,]
                 {
-                    { 1, "1tb SSD storage, 2x8 ddr4 ram 3000mhz, i5-10th, nvidia mx230", 1, "Asus", 799.89999999999998, new DateTime(2022, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "XO2022" },
-                    { 2, "500gb SSD storage, 8 ddr4 ram 3666mhz", 1, "Apple", 999.89999999999998, new DateTime(2019, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mac 2019" },
-                    { 3, "128gb storage", 2, "Apple", 650.0, new DateTime(2019, 8, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Iphone 11" },
-                    { 4, "128gb storage, 6gb ram", 2, "Poco", 199.90000000000001, new DateTime(2021, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "X3 NFC" }
+                    { 1, "1tb SSD storage, 2x8 ddr4 ram 3000mhz, i5-10th, nvidia mx230", 1, "Asus", 799.89999999999998, new DateTime(2022, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "XO2022", null },
+                    { 2, "500gb SSD storage, 8 ddr4 ram 3666mhz", 1, "Apple", 999.89999999999998, new DateTime(2019, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mac 2019", null },
+                    { 3, "128gb storage", 2, "Apple", 650.0, new DateTime(2019, 8, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Iphone 11", null },
+                    { 4, "128gb storage, 6gb ram", 2, "Poco", 199.90000000000001, new DateTime(2021, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "X3 NFC", null }
                 });
 
             migrationBuilder.CreateIndex(

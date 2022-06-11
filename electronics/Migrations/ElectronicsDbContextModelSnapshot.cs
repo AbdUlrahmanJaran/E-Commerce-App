@@ -144,6 +144,9 @@ namespace Electronics.Migrations
                     b.Property<string>("SubName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("URL")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
