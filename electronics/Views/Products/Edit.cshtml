@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -27,6 +27,13 @@
                 <label asp-for="SubName" class="control-label"></label>
                 <input asp-for="SubName" class="form-control" />
                 <span asp-validation-for="SubName" class="text-danger"></span>
+            </div>
+            <div>
+            <img src="@Model.URL" width=250 height=250/>
+            </div>
+            <div class="form-group">
+                <label asp-for="URL" class="control-label"></label>
+                <input type="file" name="file" />
             </div>
             <div class="form-group">
                 <label asp-for="AboutProduct" class="control-label"></label>

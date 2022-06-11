@@ -26,7 +26,7 @@ namespace Electronics.Models
         public Category Category { get; set; }
 
         public double Price { get; set; }
-
+        [Display(Name = "Image")]
         public string URL { get; set; }
 
     }
