@@ -18,21 +18,14 @@ namespace Electronics.Services
         }
         public async Task<Product> AddProduct(Product product)
         {
-            Product newProduct = new Product
-            {
-                MakerName = product.MakerName,
-                SubName = product.SubName,
-                AboutProduct = product.AboutProduct,
-                Price = product.Price
-            };
-            _context.Entry(newProduct).State = EntityState.Added;
+            _context.Entry(product).State = EntityState.Added;
             await _context.SaveChangesAsync();
             return product;
         }
 
         public async Task DeleteProduct(int id)
         {
-            Product product = await _context.Products.FindAsync(id);
+            var product = await GetProduct(id);
             _context.Entry(product).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
@@ -53,6 +46,7 @@ namespace Electronics.Services
                 .FirstOrDefaultAsync();
         }
 
+        // why new?
         public async Task<List<Product>> GetProducts()
         {
             return await _context.Products
@@ -69,9 +63,19 @@ namespace Electronics.Services
 
         public async Task<Product> UpdateProduct(int id, Product product)
         {
-            _context.Entry(product).State = EntityState.Modified;
+            var updateProduct = new Product
+            {
+                Id = product.Id,
+                MakerName = product.MakerName,
+                SubName = product.SubName,
+                AboutProduct = product.AboutProduct,
+                Price = product.Price,
+                ReleaseDate = product.ReleaseDate,
+                URL = product.URL
+            };
+            _context.Entry(updateProduct).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return product;
+            return updateProduct;
         }
     }
 }

@@ -3,6 +3,8 @@ using Electronics.Auth;
 using Electronics.Auth.Interfaces;
 using Electronics.Auth.Model;
 using Electronics.Data;
+using Electronics.Interfaces;
+using Electronics.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -54,6 +56,8 @@ namespace Electronics
             services.AddAuthorization();
 
             services.AddTransient<IUserService, IdentityUserService>();
+            services.AddTransient<ICategory, CategoryRepository>();
+            services.AddTransient<IProduct, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

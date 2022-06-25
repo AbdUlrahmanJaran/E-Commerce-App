@@ -10,7 +10,7 @@ using electronics.Data;
 namespace Electronics.Migrations
 {
     [DbContext(typeof(ElectronicsDbContext))]
-    [Migration("20220625025906_initial")]
+    [Migration("20220625173145_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -244,6 +244,29 @@ namespace Electronics.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Electronics.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductAmount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ShoppingCartItems");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -403,6 +426,15 @@ namespace Electronics.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Electronics.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("Electronics.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

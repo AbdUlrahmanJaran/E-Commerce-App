@@ -11,51 +11,39 @@ using Microsoft.AspNetCore.Http;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Azure.Storage.Blobs.Models;
+using Electronics.Interfaces;
 
 namespace Electronics.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly ElectronicsDbContext _context;
+        private readonly IProduct _product;
 
         IConfiguration Configuration;
 
-        public ProductsController(ElectronicsDbContext context, IConfiguration config)
+        public ProductsController(IProduct product, IConfiguration config)
         {
-            _context = context;
+            _product = product;
             Configuration = config;
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var electronicsDbContext = _context.Products.Include(p => p.Category);
-            return View(await electronicsDbContext.ToListAsync());
+            var listOfProducts = await _product.GetProducts();
+            return View(listOfProducts);
         }
 
         // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
+            var product = await _product.GetProduct(id);
             return View(product);
         }
 
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
             return View();
         }
 
@@ -95,11 +83,9 @@ namespace Electronics.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                await _product.AddProduct(product);
+                return RedirectToAction("Index");
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
 
             return View(product);
         }
@@ -109,20 +95,15 @@ namespace Electronics.Controllers
 
 
         // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            Product updateProduct = await _product.GetProduct(id);
 
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            if (updateProduct == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
-            return View(product);
+            return View(updateProduct);
         }
 
         // POST: Products/Edit/5
@@ -159,61 +140,29 @@ namespace Electronics.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(product.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                await _product.UpdateProduct(product.Id, product);
+                return RedirectToAction("Index");
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
+
             return View(product);
         }
 
         // GET: Products/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
+            Product product = await _product.GetProduct(id);
             return View(product);
         }
 
-        // POST: Products/Delete/5
+
+        //[Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            await _product.DeleteProduct(id);
+            return RedirectToAction("Index");
         }
 
-        private bool ProductExists(int id)
-        {
-            return _context.Products.Any(e => e.Id == id);
-        }
+
     }
 }

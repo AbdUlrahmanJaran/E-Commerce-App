@@ -3,11 +3,19 @@
 @{
 }
 
-
 <h1>Razor Page</h1>
 <h2>Index for Categories</h2>
 
-@foreach (var category in Model.cat)
+@foreach (var category in @Model.Categories)
 {
-    
+    <div class="card" style="width: 18rem;">
+          <img style="width: 100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLvF4eouN3sxUmztxuxn0Ep38RI4nXOeSdYQ&usqp=CAU" class="card-img-top" alt="...">
+
+          <div class="card-body">
+                <h5 class="card-title"> @category.Name </h5>
+                <p class="card-text"> @category.Info </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+    </div>
+
 }
