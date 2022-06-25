@@ -45,6 +45,7 @@ namespace Electronics.Services
             return await _context.Categories
                 .Select(c => new Category
                 {
+                    Id = c.Id,
                     Name = c.Name,
                     Info = c.Info,
                     Products = c.Products
