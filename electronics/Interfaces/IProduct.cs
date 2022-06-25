@@ -8,7 +8,7 @@ namespace Electronics.Interfaces
     {
         public Task<Product> GetProduct(int id);
 
-        public Task<List<Product>> GetCategories();
+        public Task<List<Product>> GetProducts();
 
         public Task DeleteProduct(int id);
 
