@@ -34,15 +34,6 @@ namespace Electronics.Services
         {
             return await _context.Products
                 .Where(p => p.Id == id)
-                .Select(p => new Product
-                {
-                    MakerName = p.MakerName,
-                    SubName = p.SubName,
-                    AboutProduct = p.AboutProduct,
-                    Price = p.Price,
-                    ReleaseDate = p.ReleaseDate,
-                    Category = p.Category
-                })
                 .FirstOrDefaultAsync();
         }
 
