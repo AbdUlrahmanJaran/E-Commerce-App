@@ -7,22 +7,29 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Electronics.Models;
 using electronics.Data;
+using Electronics.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace Electronics.Controllers
 {
     public class CategoriesController : Controller
     {
-        private readonly ElectronicsDbContext _context;
+        private readonly ICategory _category;
 
-        public CategoriesController(ElectronicsDbContext context)
+        IConfiguration Configuration;
+
+
+        public CategoriesController(ICategory category, IConfiguration config)
         {
-            _context = context;
+            _category = category;
+            Configuration = config;
         }
 
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            var listOfCategories = await _category.GetCategories();
+            return View(listOfCategories);
         }
 
         // GET: Categories/Details/5
@@ -33,8 +40,8 @@ namespace Electronics.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var category = await _category.GetCategory(id);
+               
             if (category == null)
             {
                 return NotFound();
@@ -43,13 +50,6 @@ namespace Electronics.Controllers
             return View(category);
         }
 
-        // GET: Categories/Products
-        public async Task<IActionResult> Products(int id)
-        {
-            return View(await _context.Products
-                .Where(m => m.CategoryId == id).ToListAsync());
-
-        }
 
         // GET: Categories/Create
         public IActionResult Create()
@@ -66,9 +66,8 @@ namespace Electronics.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                await _category.AddCategory(category);
+                return RedirectToAction("Index");
             }
             return View(category);
         }
@@ -81,7 +80,7 @@ namespace Electronics.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
+            Category category = await _category.GetCategory(id);
             if (category == null)
             {
                 return NotFound();
@@ -101,61 +100,51 @@ namespace Electronics.Controllers
                 return NotFound();
             }
 
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        _category.UpdateCategory(id, category);
+            //        await _category.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!CategoryExists(category.Id))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //return View(category);
+
+
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoryExists(category.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                await _category.UpdateCategory(category.Id, category);
+                return RedirectToAction("Index");
             }
             return View(category);
         }
 
         // GET: Categories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
+            Category category = await _category.GetCategory(id);
             return View(category);
         }
 
-        // POST: Categories/Delete/5
+
+        //[Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return _context.Categories.Any(e => e.Id == id);
+            await _category.DeleteCategory(id);
+            return RedirectToAction("Index");
         }
     }
 }

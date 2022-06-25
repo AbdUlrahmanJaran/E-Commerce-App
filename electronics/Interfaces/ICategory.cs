@@ -6,7 +6,8 @@ namespace Electronics.Interfaces
 {
     public interface ICategory
     {
-        public Task<Category> GetCategory(int id);
+
+        public Task<Category> GetCategory(int? id);
 
         public Task<List<Category>> GetCategories();
 

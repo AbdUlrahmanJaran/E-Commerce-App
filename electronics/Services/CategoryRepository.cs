@@ -16,6 +16,15 @@ namespace Electronics.Services
         {
             _context = context;
         }
+
+
+
+        public async Task<List<Category>> GetAll()
+        {
+            return await _context.Categories.ToListAsync();
+        }
+
+
         public async Task<Category> AddCategory(Category newCategory)
         {
             Category category = new Category { Name = newCategory.Name, Info = newCategory.Info };
@@ -42,7 +51,7 @@ namespace Electronics.Services
                 }).ToListAsync();
         }
 
-        public async Task<Category> GetCategory(int id)
+        public async Task<Category> GetCategory(int? id)
         {
             return await _context.Categories
                 .Where(c => c.Id == id)

@@ -1,4 +1,5 @@
 using Electronics.Controllers;
+using Electronics.Interfaces;
 using Electronics.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,18 +10,19 @@ namespace Electronics.Pages.Categories
 {
     public class IndexModel : PageModel
     {
-        private CategoriesController _controller;
+        private ICategory categoryService;
 
+        [BindProperty]
         public List<Category> Categories { get; set; }
 
-        public IndexModel(CategoriesController controller)
+        public IndexModel(ICategory service)
         {
-            _controller = controller;
+            categoryService = service;
         }
 
         public async Task OnGet()
         {
-           
+            Categories = await categoryService.GetCategories();
         }
     }
 }
