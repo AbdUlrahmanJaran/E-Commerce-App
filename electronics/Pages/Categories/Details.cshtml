@@ -2,6 +2,8 @@
 @model Electronics.Pages.Categories.DetailsModel
 @{
 }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 <div>
     <h2>@Model.category.Name</h2>
     <h3>@Model.category.Info</h3>
@@ -15,6 +17,10 @@
                 <h5 class="card-title"> @product.SubName </h5>
                 <p class="card-text"> @product.MakerName </p>
                 <a asp-page="/Products/Index" asp-route-id="@product.Id">Details</a>  
+                @if (User.Identity.IsAuthenticated)
+                {
+                <a asp-page="#" asp-route-id="@product.Id">Add To Cart</a>  
+                }
           </div>
         </div>
     }
