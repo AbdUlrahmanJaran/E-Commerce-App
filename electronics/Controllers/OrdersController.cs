@@ -1,6 +1,10 @@
 ﻿using Electronics.Data.Cart;
 using Electronics.Data.ViewModels;
+using Electronics.Models;
+using Electronics.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Electronics.Controllers
 {
@@ -8,11 +12,15 @@ namespace Electronics.Controllers
     {
         private readonly ProductsController _productsController;
         private readonly ShoppingCart _shoppingCart;
+        //private readonly IOrder _order;
+        private readonly EmailRepository _email;
 
-        public OrdersController(ProductsController productsController, ShoppingCart shoppingCart)
+        public OrdersController(ProductsController productsController, ShoppingCart shoppingCart, EmailRepository email)
         {
             _productsController = productsController;
             _shoppingCart = shoppingCart;
+            //_order = order;
+            _email = email;
         }
 
         public IActionResult Index()
@@ -29,6 +37,24 @@ namespace Electronics.Controllers
             };
 
             return View(respone);
+        }
+
+        public async Task<IActionResult> CompleteOrder()
+        {
+            var items = _shoppingCart.GetAllItems();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
+            //await _order.StoreOrderAsync(items, userId, userEmailAddress);
+            //await _shoppingCart.ClearShoppingCartAsync();
+            string message = "Order Summary : <br/> ";
+            foreach (ShoppingCartItem shopping in items)
+            {
+                message += $"you bought a  {shopping.Product.SubName}  for a price   {shopping.Product.Price} <br/>";
+            }
+            await _email.SendEmail(message, "22029470@student.ltuc.com", "Order Summary");
+            await _email.SendEmail(message, userEmailAddress, "Order Summary");
+            await _email.SendEmail(message, userEmailAddress, "Order Summary");
+            return View();
         }
     }
 }
