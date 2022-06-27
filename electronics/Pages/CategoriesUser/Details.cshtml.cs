@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Electronics.Pages.Categories
+namespace Electronics.Pages.CategoriesUser
 {
     public class DetailsModel : PageModel
     {
