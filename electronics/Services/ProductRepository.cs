@@ -37,36 +37,16 @@ namespace Electronics.Services
                 .FirstOrDefaultAsync();
         }
 
-        // why new?
         public async Task<List<Product>> GetProducts()
         {
-            return await _context.Products
-                .Select(p => new Product
-                {
-                    MakerName = p.MakerName,
-                    SubName = p.SubName,
-                    AboutProduct = p.AboutProduct,
-                    Price = p.Price,
-                    ReleaseDate = p.ReleaseDate,
-                    Category = p.Category
-                }).ToListAsync();
+            return await _context.Products.ToListAsync();
         }
 
         public async Task<Product> UpdateProduct(int id, Product product)
         {
-            var updateProduct = new Product
-            {
-                Id = product.Id,
-                MakerName = product.MakerName,
-                SubName = product.SubName,
-                AboutProduct = product.AboutProduct,
-                Price = product.Price,
-                ReleaseDate = product.ReleaseDate,
-                URL = product.URL
-            };
-            _context.Entry(updateProduct).State = EntityState.Modified;
+            _context.Entry(product).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return updateProduct;
+            return product;
         }
     }
 }

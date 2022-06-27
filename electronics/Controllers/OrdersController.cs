@@ -1,5 +1,6 @@
 ﻿using Electronics.Data.Cart;
 using Electronics.Data.ViewModels;
+using Electronics.Interfaces;
 using Electronics.Models;
 using Electronics.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,16 +11,16 @@ namespace Electronics.Controllers
 {
     public class OrdersController : Controller
     {
-        private readonly ProductsController _productsController;
+        private readonly IProduct _product;
         private readonly ShoppingCart _shoppingCart;
         //private readonly IOrder _order;
         private readonly EmailRepository _email;
 
-        public OrdersController(ProductsController productsController, ShoppingCart shoppingCart, EmailRepository email)
+        public OrdersController(IProduct product, ShoppingCart shoppingCart, EmailRepository email)
         {
-            _productsController = productsController;
+            _product = product;
             _shoppingCart = shoppingCart;
-            //_order = order;
+           // _order = order;
             _email = email;
         }
 
@@ -27,16 +28,37 @@ namespace Electronics.Controllers
         {
             var items = _shoppingCart.GetAllItems();
 
-            _shoppingCart.ShoppingCartItems = items;
+            _shoppingCart.ShoppingCartItems = items.Result;
 
             var respone = new ShoppingCartVM()
             {
                 ShoppingCart = _shoppingCart,
                 ShoppingCartTotal = _shoppingCart.GetTotal()
-
             };
 
             return View(respone);
+        }
+
+        public async Task<IActionResult> AddItemToShoppingCart(int id)
+        {
+            var item = await _product.GetProduct(id);
+
+            if (item != null)
+            {
+                _shoppingCart.AddItemToCart(item);
+            }
+            return Ok();
+        }
+
+        public async Task<IActionResult> RemoveItemFromShoppingCart(int id)
+        {
+            var item = await _product.GetProduct(id);
+
+            if (item != null)
+            {
+                _shoppingCart.RemoveItemFromCart(item);
+            }
+            return Ok();
         }
 
         public async Task<IActionResult> CompleteOrder()
@@ -47,7 +69,7 @@ namespace Electronics.Controllers
             //await _order.StoreOrderAsync(items, userId, userEmailAddress);
             //await _shoppingCart.ClearShoppingCartAsync();
             string message = "Order Summary : <br/> ";
-            foreach (ShoppingCartItem shopping in items)
+            foreach (ShoppingCartItem shopping in items.Result)
             {
                 message += $"you bought a  {shopping.Product.SubName}  for a price   {shopping.Product.Price} <br/>";
             }

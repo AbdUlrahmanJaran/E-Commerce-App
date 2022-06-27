@@ -3,10 +3,12 @@ using Electronics.Auth;
 using Electronics.Auth.Interfaces;
 using Electronics.Auth.Model;
 using Electronics.Data;
+using Electronics.Data.Cart;
 using Electronics.Interfaces;
 using Electronics.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -63,6 +65,16 @@ namespace Electronics
             services.AddTransient<IUserService, IdentityUserService>();
             services.AddTransient<ICategory, CategoryRepository>();
             services.AddTransient<IProduct, ProductRepository>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+
+            services.AddSession();
+
+            //forEmail
+            services.AddScoped<EmailRepository>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +91,7 @@ namespace Electronics
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
