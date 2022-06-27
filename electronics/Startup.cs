@@ -55,6 +55,11 @@ namespace Electronics
             services.AddAuthentication();
             services.AddAuthorization();
 
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AddPageRoute("/CategoriesUser/Index", "");
+            });
+
             services.AddTransient<IUserService, IdentityUserService>();
             services.AddTransient<ICategory, CategoryRepository>();
             services.AddTransient<IProduct, ProductRepository>();
@@ -84,7 +89,7 @@ namespace Electronics
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}");
             });
 
             //This creates 2 roles with 2 users!

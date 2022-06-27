@@ -12,7 +12,7 @@ namespace Electronics.Data.Cart
 
         public string ShoppingCartId { get; set; }
 
-        public List<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public List<Product> ShoppingCartItems { get; set; }
 
         public ShoppingCart(ElectronicsDbContext context)
         {

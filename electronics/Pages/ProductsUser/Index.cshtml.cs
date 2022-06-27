@@ -5,22 +5,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Electronics.Pages.Products
+namespace Electronics.Pages.ProductsUser
 {
     public class IndexModel : PageModel
     {
         private IProduct ProductService;
 
-        public Product Product { get; set; }
+        public List<Product> Products { get; set; }
 
         public IndexModel(IProduct service)
         {
             ProductService = service;
+            
         }
 
-        public async Task OnGetAsync(int id)
+        public async Task OnGetAsync()
         {
-            Product = await ProductService.GetProduct(id);
+            Products = await ProductService.GetProducts();
         }
     }
 }
