@@ -19,7 +19,7 @@
                 <a asp-page="/Products/Index" asp-route-id="@product.Id">Details</a>  
                 @if (User.Identity.IsAuthenticated)
                 {
-                <a asp-page="#" asp-route-id="@product.Id">Add To Cart</a>  
+                <a asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@product.Id">Add To Cart</a>  
                 }
           </div>
         </div>

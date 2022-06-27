@@ -1,0 +1,68 @@
+﻿@page
+@model Electronics.Pages.ShoppingCart.IndexModel
+@{
+}
+<div class="row">
+
+    <div class="col-md-8 offset-2">
+
+        <div class="text-center">
+            <h2>Your shopping cart summary</h2>
+        </div>
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Selected Amount</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in @Model.CartItems)
+                {
+                    <tr>
+                        <td class="align-middle">@item.ProductAmount</td>
+                        <td class="align-middle">@item.Product.MakerName :@item.Product.SubName</td>
+                        <td class="align-middle">@item.Product.Price.ToString("c")</td>
+                        <td class="align-middle">@((item.ProductAmount * item.Product.Price).ToString("c"))</td>
+                        <td class="align-middle">
+
+                            <a class="text-alert-danger" asp-controller="Orders" asp-action="RemoveItemFromShoppingCart" asp-route-id="@item.Product.Id">-</a>
+                            <i class="bi bi-cart-dash"></i>
+
+                        </td>
+
+                        <td class="align-middle">
+
+                            <a class="text-alert-success" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Product.Id">+</a>
+                            <i class="bi bi-cart-dash"></i>
+
+                        </td>
+                    </tr>
+                }
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    <td>Total: </td>
+                    <td>
+                        @Model.ShoppingCartTotal.ToString("c")
+                    </td>
+                    <td></td>
+                </tr>
+            </tfoot>
+
+        </table>
+        <div class="text-center">
+        <a class="btn btn-outline-success" asp-page=Pages/ProductsUser/Index>
+            Add more items
+        </a>
+     </div>
+    </div>
+</div>
