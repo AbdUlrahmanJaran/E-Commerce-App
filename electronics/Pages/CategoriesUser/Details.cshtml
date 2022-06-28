@@ -8,10 +8,12 @@
     <h2>@Model.category.Name</h2>
     <h3>@Model.category.Info</h3>
     <hr />      
-@foreach (var product in @Model.Products)
+    @if (@Model.Products != null)
+   {
+        @foreach (var product in @Model.Products)
     {
         <div class="card" style="width: 18rem;">
-          <img style="width: 100px" src=@product.URL class="card-img-top" alt="...">
+          <img style="width: 100px" src="@product.URL" class="card-img-top" alt="...">
 
           <div class="card-body">
                 <h5 class="card-title"> @product.SubName </h5>
@@ -24,4 +26,6 @@
           </div>
         </div>
     }
+   }
+   
 </div>
