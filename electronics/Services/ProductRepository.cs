@@ -34,12 +34,15 @@ namespace Electronics.Services
         {
             return await _context.Products
                 .Where(p => p.Id == id)
+                .Include(p => p.Category)
                 .FirstOrDefaultAsync();
         }
 
         public async Task<List<Product>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+                .Include(p => p.Category)
+                .ToListAsync();
         }
 
         public async Task<Product> UpdateProduct(int id, Product product)
