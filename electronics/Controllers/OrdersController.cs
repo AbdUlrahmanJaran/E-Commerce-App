@@ -39,28 +39,6 @@ namespace Electronics.Controllers
             return View(respone);
         }
 
-        public async Task<IActionResult> AddItemToShoppingCart(int id)
-        {
-            var item = await _product.GetProduct(id);
-
-            if (item != null)
-            {
-                _shoppingCart.AddItemToCart(item);
-            }
-            return Ok();
-        }
-
-        public async Task<IActionResult> RemoveItemFromShoppingCart(int id)
-        {
-            var item = await _product.GetProduct(id);
-
-            if (item != null)
-            {
-                _shoppingCart.RemoveItemFromCart(item);
-            }
-            return Ok();
-        }
-
         public async Task<IActionResult> CompleteOrder()
         {
             var items = _shoppingCart.GetAllItems();
