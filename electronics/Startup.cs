@@ -98,11 +98,11 @@ namespace Electronics
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
-
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}");
+                
+                endpoints.MapRazorPages();
             });
 
             //This creates 2 roles with 2 users!

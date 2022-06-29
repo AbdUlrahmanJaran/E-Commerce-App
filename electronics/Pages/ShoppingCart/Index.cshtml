@@ -1,5 +1,5 @@
 ﻿@page
-@model Electronics.Pages.ShoppingCart.IndexModel
+@model Electronics.Pages.Shopping_Cart.IndexModel
 @{
 }
 <div class="row">
@@ -31,16 +31,18 @@
                         <td class="align-middle">@item.Product.Price.ToString("c")</td>
                         <td class="align-middle">@((item.ProductAmount * item.Product.Price).ToString("c"))</td>
                         <td class="align-middle">
-
-                            <a class="text-alert-danger" asp-controller="Orders" asp-action="RemoveItemFromShoppingCart" asp-route-id="@item.Product.Id">-</a>
-                            <i class="bi bi-cart-dash"></i>
-
+                            <form method="post" asp-page-handler="Remove">
+                            <input hidden type="number" name="productId" value="@item.Product.Id" />
+                                <button tybe="submit">-</button>
+                             </form>
                         </td>
 
                         <td class="align-middle">
-
-                            <a class="text-alert-success" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Product.Id">+</a>
+                            <form method="post">
+                            <input hidden type="number" name="productId" value="@item.Product.Id" />
+                                <button tybe="submit">+</button>
                             <i class="bi bi-cart-dash"></i>
+                            </form>
 
                         </td>
                     </tr>
@@ -60,7 +62,7 @@
 
         </table>
         <div class="text-center">
-        <a class="btn btn-outline-success" asp-page=Pages/ProductsUser/Index>
+        <a class="btn btn-outline-success" href="../ProductsUser/Index">
             Add more items
         </a>
      </div>

@@ -4,32 +4,41 @@ using Electronics.Interfaces;
 using Electronics.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Electronics.Pages.ShoppingCart
+namespace Electronics.Pages.Shopping_Cart
 {
     public class IndexModel : PageModel
     {
-        private Data.Cart.ShoppingCart CartService;
-
+        private ShoppingCart CartService;
+        private IProduct ProductService;
         public List<ShoppingCartItem> CartItems { get; set; }
         public double ShoppingCartTotal { get; set; }
-        IProduct Product { get; set; }
-        public IndexModel(Data.Cart.ShoppingCart service)
+        
+        public IndexModel(ShoppingCart cart , IProduct product)
         {
-            CartService = service;
+            CartService = cart;
+            ProductService = product;
         }
 
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
             CartItems = await CartService.GetAllItems();
             ShoppingCartTotal = CartService.GetTotal();
         }
-        public async Task OnPost(int id)
+        public async Task<IActionResult> OnPostAsync(int productId)
         {
-            Product product = await Product.GetProduct(id);
+            Product product = await ProductService.GetProduct(productId);
             CartService.AddItemToCart(product);
+            return RedirectToPage();
+        }
+        public async Task<IActionResult> OnPostRemove(int productId)
+        {
+            Product product = await ProductService.GetProduct(productId);
+            CartService.RemoveItemFromCart(product);
+            return RedirectToPage();
         }
     }
 }
