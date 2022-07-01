@@ -28,6 +28,11 @@ namespace Electronics.Data
                     await roleManager.CreateAsync(new IdentityRole(Roles.User));
                 }
 
+                if (!await roleManager.RoleExistsAsync(Roles.Editor))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(Roles.Editor));
+                }
+
                 //Users
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 string adminUserEmail = "admin@electronics.com";
@@ -44,6 +49,22 @@ namespace Electronics.Data
                     };
                     await userManager.CreateAsync(newAdminUser, "Admin123!");
                     await userManager.AddToRoleAsync(newAdminUser, Roles.Admin);
+                }
+
+                string editorUserEmail = "editor@electronics.com";
+
+                var editorUser = await userManager.FindByEmailAsync(editorUserEmail);
+                if (editorUser == null)
+                {
+                    var newAppUser = new ApplicationUser()
+                    {
+                        FullName = "Editor User",
+                        UserName = "editor-user",
+                        Email = editorUserEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(editorUser, "Editoruser123!");
+                    await userManager.AddToRoleAsync(editorUser, Roles.Editor);
                 }
 
 

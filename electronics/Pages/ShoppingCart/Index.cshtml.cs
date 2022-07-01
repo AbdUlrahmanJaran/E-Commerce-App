@@ -25,7 +25,7 @@ namespace Electronics.Pages.Shopping_Cart
 
         public async Task OnGetAsync()
         {
-            CartItems = await CartService.GetAllItems();
+            CartItems = CartService.GetAllItems();
             ShoppingCartTotal = CartService.GetTotal();
         }
         public async Task<IActionResult> OnPostAsync(int productId)

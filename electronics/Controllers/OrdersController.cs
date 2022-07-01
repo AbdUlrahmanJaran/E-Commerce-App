@@ -28,7 +28,7 @@ namespace Electronics.Controllers
         {
             var items = _shoppingCart.GetAllItems();
 
-            _shoppingCart.ShoppingCartItems = items.Result;
+            _shoppingCart.ShoppingCartItems = items;
 
             var respone = new ShoppingCartVM()
             {
@@ -47,7 +47,7 @@ namespace Electronics.Controllers
             //await _order.StoreOrderAsync(items, userId, userEmailAddress);
             //await _shoppingCart.ClearShoppingCartAsync();
             string message = "Order Summary : <br/> ";
-            foreach (ShoppingCartItem shopping in items.Result)
+            foreach (ShoppingCartItem shopping in items)
             {
                 message += $"you bought a  {shopping.Product.SubName}  for a price   {shopping.Product.Price} <br/>";
             }

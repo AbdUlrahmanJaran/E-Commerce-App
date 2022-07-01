@@ -80,8 +80,8 @@ namespace Electronics.Data.Cart
             _context.SaveChanges();
         }
 
-
-        public async Task<List<ShoppingCartItem>> GetAllItems()
+        // I REMOVED ASYNC AND TASK FROM THIS FUNCTION!!
+        public List<ShoppingCartItem> GetAllItems()
         {
             return _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).Include(n => n.Product).ToList();
         }
