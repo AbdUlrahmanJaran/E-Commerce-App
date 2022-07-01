@@ -23,33 +23,45 @@
                         </li>*@
                         
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/CategoriesUser/Index">Categories</a>
+                            <a class="nav-link text-dark" asp-page="/CategoriesUser/Index">Categories</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/ProductsUser/Index">Products</a>
+                            <a class="nav-link text-dark" asp-page="/ProductsUser/Index">Products</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Index">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="SignUp">SignUp</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Sign out</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/ShoppingCart/Index">Show Cart</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Authentication/LogIn">Log In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Authentication/SignUp">Sign Up</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/ShoppingCart/Index">Show Cart</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Cart Quick Look
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <a class="dropdown-item" href="#">ITEM 1</a>
-                              <a class="dropdown-item" href="#">ITEM 2</a>
-                              <a class="dropdown-item" href="#">ITEM 3</a>
-                            </div>
-                        </li>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">ITEM 1</a>
+                                    <a class="dropdown-item" href="#">ITEM 2</a>
+                                    <a class="dropdown-item" href="#">ITEM 3</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Auth" asp-action="LogOut">Log Out</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" href="#">@User.Identity.Name</a>
+                            </li>
+                        }
+
+
+                        
                     </ul>
                 </div>
             </div>
@@ -60,7 +72,9 @@
             @RenderBody()
         </main>
     </div>
-
+    <div> <!--delete this -->
+        <h1>A</h1>
+    </div>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - Electronics - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

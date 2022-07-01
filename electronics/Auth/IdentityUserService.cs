@@ -61,14 +61,17 @@ namespace Electronics.Auth
 
         public async Task<UserDTO> Authenticate(string username, string password)
         {
-            //to be fixed
-            if (username == null || password == null)
+            if (username == null)
             {
-                return null;
+                throw new Exception("User Name Field is Required!");
+            }
+            else if(password == null)
+            {
+                throw new Exception("Password Field is Required!");
             }
 
             var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
-
+            
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(username);
@@ -77,9 +80,10 @@ namespace Electronics.Auth
                     Username = user.UserName
                 };
             }
-
-
-            return null;
+            else
+            {
+                throw new Exception("Wrong User Name or Password!");
+            }            
         }
 
         public async Task<UserDTO> GetUser(ClaimsPrincipal principal)
@@ -89,6 +93,11 @@ namespace Electronics.Auth
             {
                 Username = user.UserName
             };
+        }
+        
+        public async Task LogOut()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Electronics.Auth.Interfaces;
 using Electronics.Auth.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Electronics.Controllers
@@ -20,28 +21,38 @@ namespace Electronics.Controllers
         
         public async Task<ActionResult<UserDTO>> Login(LoginDTO login)
         {
-            var user = await _userService.Authenticate(login.Username, login.Password);
-            if (user == null)
+            try
             {
-                return RedirectToAction("Index");
+                await _userService.Authenticate(login.Username, login.Password);
             }
-            return Redirect("/");
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View("Index");
+            }
+            return Redirect("/Home/Index");
         }
 
-        public IActionResult SignUp()
-        {
-            return View();
-        }
+        //public IActionResult SignUp()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public async Task<ActionResult<UserDTO>> SignUp(RegisterDTO register)
+        //[HttpPost]
+        //public async Task<ActionResult<UserDTO>> SignUp(RegisterDTO register)
+        //{
+        //    var user = await _userService.Register(register, this.ModelState);
+        //    if (ModelState.IsValid)
+        //    {
+        //        return Redirect("/");
+        //    }
+        //    return View();
+        //}
+
+        public async Task<IActionResult> LogOut()
         {
-            var user = await _userService.Register(register, this.ModelState);
-            if (ModelState.IsValid)
-            {
-                return Redirect("/");
-            }
-            return View();
+            await _userService.LogOut();
+            return RedirectToPage("/CategoriesUser/Index");
         }
     }
 }

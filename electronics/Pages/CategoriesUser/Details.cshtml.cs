@@ -34,7 +34,7 @@ namespace Electronics.Pages.CategoriesUser
             Product product = await ProductService.GetProduct(productId);
             CartService.AddItemToCart(product);
 
-            return Redirect("../ProductsUser");
+            return RedirectToPage("Details" , new { id = product.CategoryId });
         }
 
     }

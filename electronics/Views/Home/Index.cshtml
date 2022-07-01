@@ -1,5 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <h1>You are The Admin</h1>
+}
+else
+{
+    <h1>Please Log In Admin</h1>
+}
+
 
 
