@@ -13,7 +13,7 @@
           <div class="card-body">
                 <h5 class="card-title"> @product.SubName </h5>
                 <p class="card-text"> @product.MakerName </p>
-                <a asp-page="/Products/Index" asp-route-id="@product.Id">Details</a>
+                <a asp-page="Details" asp-route-id="@product.Id">Details</a>
 
                 @if (User.Identity.IsAuthenticated)
                 {

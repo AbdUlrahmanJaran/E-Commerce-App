@@ -9,6 +9,7 @@ using Electronics.Models;
 using electronics.Data;
 using Electronics.Interfaces;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Electronics.Controllers
 {
@@ -50,8 +51,9 @@ namespace Electronics.Controllers
             return View(category);
         }
 
-
+        
         // GET: Categories/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -73,6 +75,7 @@ namespace Electronics.Controllers
         }
 
         // GET: Categories/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -132,6 +135,7 @@ namespace Electronics.Controllers
         }
 
         // GET: Categories/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             Category category = await _category.GetCategory(id);

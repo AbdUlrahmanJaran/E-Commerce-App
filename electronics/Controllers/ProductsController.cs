@@ -12,6 +12,7 @@ using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Azure.Storage.Blobs.Models;
 using Electronics.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Electronics.Controllers
 {
@@ -42,6 +43,7 @@ namespace Electronics.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -95,6 +97,7 @@ namespace Electronics.Controllers
 
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             Product updateProduct = await _product.GetProduct(id);
@@ -147,6 +150,7 @@ namespace Electronics.Controllers
             return View(product);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
@@ -155,7 +159,6 @@ namespace Electronics.Controllers
         }
 
 
-        //[Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
