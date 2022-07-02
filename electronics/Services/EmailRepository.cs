@@ -7,7 +7,12 @@ namespace Electronics.Services
 {
     public class EmailRepository
     {
-        IConfiguration Configuration;
+        IConfiguration Configuration { get; set; }
+
+        public EmailRepository(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         public async Task<bool> SendEmail(string message, string toEmail, string subject)
         {
 

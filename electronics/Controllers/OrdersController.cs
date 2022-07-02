@@ -13,14 +13,14 @@ namespace Electronics.Controllers
     {
         private readonly IProduct _product;
         private readonly ShoppingCart _shoppingCart;
-        //private readonly IOrder _order;
+        private readonly IOrder _order;
         private readonly EmailRepository _email;
 
-        public OrdersController(IProduct product, ShoppingCart shoppingCart, EmailRepository email)
+        public OrdersController(IProduct product, ShoppingCart shoppingCart, IOrder order, EmailRepository email)
         {
             _product = product;
             _shoppingCart = shoppingCart;
-           // _order = order;
+            _order = order;
             _email = email;
         }
 
@@ -44,8 +44,8 @@ namespace Electronics.Controllers
             var items = _shoppingCart.GetAllItems();
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
-            //await _order.StoreOrderAsync(items, userId, userEmailAddress);
-            //await _shoppingCart.ClearShoppingCartAsync();
+            await _order.StoreOrder(items, userId, userEmailAddress);
+            await _shoppingCart.ClearShoppingCart();
             string message = "Order Summary : <br/> ";
             foreach (ShoppingCartItem shopping in items)
             {
