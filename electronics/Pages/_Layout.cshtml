@@ -4,8 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Electronics</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
@@ -19,9 +17,6 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>*@
                         
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/CategoriesUser/Index">Categories</a>
@@ -29,11 +24,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/ProductsUser/Index">Products</a>
                         </li>
-                        <li class="navbar-nav">
-                            @await Component.InvokeAsync("ShoppingCartSummaryVM")
-                        </li>
+                        
                         @if (!User.Identity.IsAuthenticated)
                         {
+                            
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-page="/Authentication/LogIn">Log In</a>
                             </li>
@@ -44,23 +39,20 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/ShoppingCart/Index">Show Cart</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Cart Quick Look
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">ITEM 1</a>
-                                    <a class="dropdown-item" href="#">ITEM 2</a>
-                                    <a class="dropdown-item" href="#">ITEM 3</a>
+
+                                <div>
+                                    <a class="nav-link text-dark" asp-page="/ShoppingCart/Index">Show Cart </a>
+                                    @await Component.InvokeAsync("ShoppingCartSummaryVM")
                                 </div>
+
+                                
                             </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Auth" asp-action="LogOut">Log Out</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">@User.Identity.Name</a>
+                            <a class="nav-link text-dark" href="#">Hello! @User.Identity.Name</a>
                             </li>
                         }
 

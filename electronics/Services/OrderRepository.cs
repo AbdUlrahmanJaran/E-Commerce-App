@@ -15,10 +15,13 @@ namespace Electronics.Services
         {
             _context = context;
         }
-        //Role should be edited
+
         public async Task<List<Order>> GetOrdersByIdAndRole(string userId, string userRole)
         {
-            var orders = await _context.Orders.Include(o => o.OrderItems).ThenInclude(i => i.Product).Where(o => o.UserId == userId).ToListAsync();
+            var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(m => m.Product).ToListAsync();
+
+            
+
             return orders;
         }
 
@@ -27,7 +30,10 @@ namespace Electronics.Services
             var order = new Order()
             {
                 UserId = userId,
-                Email = userEmail
+                Email = userEmail,
+                
+                
+
             };
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();

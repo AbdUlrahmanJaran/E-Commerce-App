@@ -47,6 +47,8 @@ namespace Electronics.Pages.Shopping_Cart
             CartService.RemoveItemFromCart(product);
             return RedirectToPage();
         }
+
+
         public async Task<IActionResult> OnPostCheckout()
         {
             var items = CartService.GetAllItems();
@@ -62,7 +64,7 @@ namespace Electronics.Pages.Shopping_Cart
             await EmailService.SendEmail(message, "22029470@student.ltuc.com", "Order Summary");
             await EmailService.SendEmail(message, userEmailAddress, "Order Summary");
             await EmailService.SendEmail(message, userEmailAddress, "Order Summary");
-            return RedirectToPage("/");
+            return RedirectToPage("CompleteOrder");
         }
     }
 }

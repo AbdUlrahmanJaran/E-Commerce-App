@@ -26,7 +26,9 @@ namespace Electronics.Controllers
             Configuration = config;
         }
 
+
         // GET: Categories
+        [Authorize(Roles ="Admin, Editor")]
         public async Task<IActionResult> Index()
         {
             var listOfCategories = await _category.GetCategories();
@@ -34,6 +36,7 @@ namespace Electronics.Controllers
         }
 
         // GET: Categories/Details/5
+        [Authorize(Roles = "Admin, Editor")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -62,6 +65,7 @@ namespace Electronics.Controllers
         // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Info")] Category category)
@@ -75,7 +79,7 @@ namespace Electronics.Controllers
         }
 
         // GET: Categories/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Editor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -94,6 +98,7 @@ namespace Electronics.Controllers
         // POST: Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Editor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Info")] Category category)
@@ -102,28 +107,6 @@ namespace Electronics.Controllers
             {
                 return NotFound();
             }
-
-            //if (ModelState.IsValid)
-            //{
-            //    try
-            //    {
-            //        _category.UpdateCategory(id, category);
-            //        await _category.SaveChangesAsync();
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!CategoryExists(category.Id))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //return View(category);
 
 
             if (ModelState.IsValid)

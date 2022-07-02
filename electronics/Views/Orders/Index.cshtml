@@ -1,70 +1,53 @@
 ﻿@using Electronics.Data.ViewModels
-@model ShoppingCartVM
+@model List<Order>
 
 @{
-    ViewData["Title"] = "Shopping cart summary";
+    ViewData["Title"] = "All Orders";
 }
 
 <div class="row">
-
     <div class="col-md-8 offset-2">
-
-        <div class="text-center">
-            <h2>Your shopping cart summary</h2>
-        </div>
+        <p>
+            <h4> List of all orders</h4>
+        </p>
 
         <table class="table">
-
             <thead>
                 <tr>
-                    <th>Selected Amount</th>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Subtotal</th>
+                    <th>Order ID</th>
+                    <th>Email</th>
+                    <th>Items</th>
+                    <th>Total</th>
                 </tr>
             </thead>
-
             <tbody>
-                @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
-                {
-                    <tr>
-                        <td class="align-middle">@item.ProductAmount</td>
-                        <td class="align-middle">@item.Product.MakerName :@item.Product.SubName</td>
-                        <td class="align-middle">@item.Product.Price.ToString("c")</td>
-                        <td class="align-middle">@((item.ProductAmount * item.Product.Price).ToString("c"))</td>
-                        <td class="align-middle">
-
-                            <a class="text-alert-danger" asp-controller="Orders" asp-action="RemoveItemFromCart" asp-route-id="@item.Product.Id"></a>
-                            <i class="bi bi-cart-dash"></i>
-
-                        </td>
-
-                        <td class="align-middle">
-
-                            <a class="text-alert-success" asp-controller="Orders" asp-action="AddItemToCart" asp-route-id="@item.Product.Id"></a>
-                            <i class="bi bi-cart-dash"></i>
-
-                        </td>
-                    </tr>
-                }
+                @foreach (var order in Model)
+               {
+                   <tr>
+                       <td class="align-middle"> @order.Id </td>
+                       <td class="align-middle"> @order.Email</td>
+                       <td class="align-middle"> 
+                           <ul style="list-style-type:none">
+                               @foreach (var item in order.OrderItems)
+                              {
+                                  <li>
+                                      <div class="alert alert-info" role="alert">
+                                          <span class="badge bg-success">
+                                              @item.Amount
+                                          </span>[@item.Price.ToString("C")]
+                                      </div>
+                                  </li>
+                              }
+                           </ul>
+                       </td>
+                       <td class="align-middle">
+                           @order.OrderItems.Select(m => m.Product.Price * m.Amount).Sum().ToString("c")
+                       </td>
+                   </tr>
+               }
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="2"></td>
-                    <td>Total: </td>
-                    <td>
-                        @Model.ShoppingCartTotal.ToString("c")
-                    </td>
-                    <td></td>
-                </tr>
-            </tfoot>
-
         </table>
-
-        <div class="text-center">
-            HERE WE NEED TO ADD THE BUTTON TO ADD MORE MOVIES
-        </div>
-
     </div>
+
 
 </div>

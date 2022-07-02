@@ -1,8 +1,10 @@
 ﻿using Electronics.Data.Cart;
+using Electronics.Data.Static;
 using Electronics.Data.ViewModels;
 using Electronics.Interfaces;
 using Electronics.Models;
 using Electronics.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -24,21 +26,18 @@ namespace Electronics.Controllers
             _email = email;
         }
 
-        public IActionResult Index()
+        // THIS FUNCTION WILL BECOME: GET ALL ORDERS FROM ALL USERS TO ADMIN
+        [Authorize(Roles ="Admin, Editor")]
+        public async Task<IActionResult> Index()
         {
-            var items = _shoppingCart.GetAllItems();
+            var items = await _order.GetOrdersByIdAndRole("", "");
 
-            _shoppingCart.ShoppingCartItems = items;
 
-            var respone = new ShoppingCartVM()
-            {
-                ShoppingCart = _shoppingCart,
-                ShoppingCartTotal = _shoppingCart.GetTotal()
-            };
-
-            return View(respone);
+            return View(items);
         }
 
+        
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CompleteOrder()
         {
             var items = _shoppingCart.GetAllItems();
