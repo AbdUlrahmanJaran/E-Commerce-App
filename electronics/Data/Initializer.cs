@@ -56,15 +56,15 @@ namespace Electronics.Data
                 var editorUser = await userManager.FindByEmailAsync(editorUserEmail);
                 if (editorUser == null)
                 {
-                    var newAppUser = new ApplicationUser()
+                    var newEditorUser = new ApplicationUser()
                     {
                         FullName = "Editor User",
                         UserName = "editor-user",
                         Email = editorUserEmail,
                         EmailConfirmed = true
                     };
-                    await userManager.CreateAsync(editorUser, "Editoruser123!");
-                    await userManager.AddToRoleAsync(editorUser, Roles.Editor);
+                    await userManager.CreateAsync(newEditorUser, "Editoruser123!");
+                    await userManager.AddToRoleAsync(newEditorUser, Roles.Editor);
                 }
 
 

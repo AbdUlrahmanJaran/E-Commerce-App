@@ -93,5 +93,12 @@ namespace Electronics.Data.Cart
             return total;
         }
 
+        public async Task ClearShoppingCart()
+        {
+            var items = await _context.ShoppingCartItems.Where(i => i.ShoppingCartId == ShoppingCartId).ToListAsync();
+            _context.ShoppingCartItems.RemoveRange(items);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

@@ -65,6 +65,7 @@ namespace Electronics
             services.AddTransient<IUserService, IdentityUserService>();
             services.AddTransient<ICategory, CategoryRepository>();
             services.AddTransient<IProduct, ProductRepository>();
+            services.AddTransient<IOrder, OrderRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
