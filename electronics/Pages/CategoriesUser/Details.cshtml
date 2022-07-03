@@ -34,7 +34,7 @@
                       @if (User.Identity.IsAuthenticated)
                       {
                           <div class="d-flex justify-content-between align-items-center font-weight-bold mt-4">
-                              <a asp-page="Details" asp-route-id="@product.Id" style="color:#646FD4">Details</a>
+                              <a asp-page="/ProductsUser/Details" asp-route-id="@product.Id" style="color:#646FD4">Details</a>
                               <form method="post">
                               <input hidden type="number" name="productId" value="@product.Id" />
                                   <button class="btn-lg btn-block" tybe="submit" style="font-size: 12px; background-color:#646FD4">Add To Cart</button>
