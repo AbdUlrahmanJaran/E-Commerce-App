@@ -92,31 +92,31 @@ As a user, I would like to have all my content rendered to me in razor pages, an
 
 1. User Categories Page:
 
-![](./assets/user-categories.png)
+![](./Assets/user-categories.png)
 
 2. User Products Page:
 
-![](./assets/user-products.png)
+![](./Assets/user-products.png)
 
 2. User Cart Page:
 
-![](./assets/user-cart.png)
+![](./Assets/user-cart.png)
 
 3. Admin Categories Page:
 
-![](./assets/admin-categories.png)
+![](./Assets/admin-categories.png)
 
 4. Admin Products Page:
 
-![](./assets/admin-products.png)
+![](./Assets/admin-products.png)
 
 5. Admin Orders View:
 
-![](./assets/admin-orders.png)
+![](./Assets/admin-orders.png)
 
 6. Sign in
 
-![](./assets/sign-in.png)
+![](./Assets/sign-in.png)
 
 
 <br><hr><br>
@@ -126,11 +126,11 @@ As a user, I would like to have all my content rendered to me in razor pages, an
 
 ### Categories
 
-![](assets/AdminWireframe1.png)
+![](Assets/AdminWireframe1.png)
 
 ### Product Details Page
 
-![](assets/AdminWireframe2.png)
+![](Assets/AdminWireframe2.png)
 
 <br>
 
