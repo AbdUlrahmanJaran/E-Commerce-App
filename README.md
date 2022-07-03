@@ -15,6 +15,12 @@ Contains Admin Dashboard for Adding, Editing & Deleting categories or products.
 
 Good user experience with cart and online shopping implemented.
 
+### Name of contributors:
+1. Shadi Aslan
+2. Abdulrahman Jaran
+
+### Link to [Deployed site](https://electronics-storedbcontext.azurewebsites.net)
+
 <br><hr><br>
 ## Technology
 
@@ -26,12 +32,6 @@ We used ASP.NET Version (5.0.17 )
 
 
 [↑ Table Of Contents ↑](#TB)
-
-<br>
-
-<br><hr><br>
-
-
 
 <br>
 
