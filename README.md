@@ -122,27 +122,15 @@ As a user, I would like to have all my content rendered to me in razor pages, an
 <br><hr><br>
 # Wireframes: <a name="WF"></a>
 
-### Dashboard Page
 
-![](./assets/ECom-Wireframe1.png)
 
-### Get All Categoties Page
+### Categories
 
-![](./assets/ECom-Wireframe2.png)
-
-<br>
-
-[↑ Table Of Contents ↑](#TABLE)
-
-<br><hr><br>
-
-### Get Category Details Page
-
-![](assets/ECom-Wireframe3.png)
+![](assets/AdminWireframe1.png)
 
 ### Product Details Page
 
-![](assets/ECom-Wireframe4.png)
+![](assets/AdminWireframe2.png)
 
 <br>
 
