@@ -3,20 +3,30 @@
 @{
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-<h1>Razor Page</h1>
-<h2>Index for Categories</h2>
-
-@foreach (var category in @Model.Categories)
-{
-    <div class="card" style="width: 18rem;">
-          <img style="width: 100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLvF4eouN3sxUmztxuxn0Ep38RI4nXOeSdYQ&usqp=CAU" class="card-img-top" alt="...">
-
-          <div class="card-body">
-                <h5 class="card-title"> @category.Name </h5>
-                <p class="card-text"> @category.Info </p>
-                <a asp-page="/CategoriesUser/Details" asp-route-id="@category.Id">Details</a>  
-          </div>
+<div class="vh-100">
+    <div>
+        <h2 style="text-align:center">Categories</h2>
     </div>
-
-}
+    <div class="container">
+        <div class="row justify-content-center">
+            @foreach (var category in @Model.Categories)
+            {
+                <div class="col-sm-6 col-lg-4 col-lg-2" style="padding : 5px ">
+                  <div class="card text-black">
+                    <img src="@category.Name"
+                      class="card-img-top" alt="..." />
+                    <div class="card-body">
+                      <div class="text-center">
+                        <h5 class="card-title">@category.Name</h5>
+                        <p class="text-muted mb-4">@category.Info</p>
+                      </div>
+                      <div class="d-flex justify-content-center font-weight-bold mt-4">
+                        <a asp-page="/CategoriesUser/Details" asp-route-id="@category.Id">Details</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

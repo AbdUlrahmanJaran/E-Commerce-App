@@ -26,7 +26,10 @@ namespace Electronics.Auth
             {
                 return null;
             }
-
+            if (registerDTO.Username.Contains(" "))
+            {
+                throw new Exception("User Name Shouldn't have spaces");
+            }
             var user = new ApplicationUser
             {
                 UserName = registerDTO.Username,

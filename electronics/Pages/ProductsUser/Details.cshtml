@@ -2,43 +2,46 @@
 @model Electronics.Pages.ProductsUser.DetailsModel
 @{
 }
+
 <div>
-    <h4>Product</h4>
+    <center>
+    <h4>@Model.product.SubName</h4>
     <img src="@Model.product.URL" width=250 height=250/>
+    </center>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.product.MakerName)
+            MakerName
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.product.MakerName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.product.SubName)
+            SubName
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.product.SubName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.product.AboutProduct)
+            AboutProduct
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.product.AboutProduct)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.product.ReleaseDate)
+            ReleaseDate
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.product.ReleaseDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.product.Price)
+            Price
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.product.Price)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.product.Category)
+            Category
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.product.Category.Name)
@@ -50,7 +53,7 @@
     {
         <form method="post">
         <input hidden type="number" name="id" value="@Model.product.Id" />
-            <button tybe="submit">Add To Cart</button>
+            <button tybe="submit" style="background-color:#646FD4">Add To Cart</button>
         </form>
     }
 </div>

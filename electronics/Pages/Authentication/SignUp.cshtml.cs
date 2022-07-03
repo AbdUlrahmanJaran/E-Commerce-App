@@ -42,7 +42,6 @@ namespace Electronics.Pages.Authentication
             //}
             //catch (Exception e)
             //{
-            //    ModelState.AddModelError("", e.Message);
             //    return Page();
             //}
             

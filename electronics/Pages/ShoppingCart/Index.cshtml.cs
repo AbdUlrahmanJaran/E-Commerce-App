@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Electronics.Pages.Shopping_Cart
@@ -56,15 +57,15 @@ namespace Electronics.Pages.Shopping_Cart
             string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
             await OrderService.StoreOrder(items, userId, userEmailAddress);
             await CartService.ClearShoppingCart();
-            string message = "Order Summary : <br/> ";
+            StringBuilder summaryMessage = new StringBuilder("Order Summary :");
             foreach (ShoppingCartItem shopping in items)
             {
-                message += $"you bought a  {shopping.Product.SubName}  for a price   {shopping.Product.Price} <br/>";
+                summaryMessage.Append(Environment.NewLine + $"You bought {shopping.ProductAmount} of {shopping.Product.SubName} for a total price: {shopping.ProductAmount * shopping.Product.Price}");
             }
-            await EmailService.SendEmail(message, "22029470@student.ltuc.com", "Order Summary");
-            await EmailService.SendEmail(message, userEmailAddress, "Order Summary");
-            await EmailService.SendEmail(message, userEmailAddress, "Order Summary");
-            return RedirectToPage("CompleteOrder");
+            await EmailService.SendEmail(summaryMessage.ToString(), "22029470@student.ltuc.com", "Order Summary");
+            await EmailService.SendEmail(summaryMessage.ToString(), userEmailAddress, "Order Summary");
+            await EmailService.SendEmail(summaryMessage.ToString(), userEmailAddress, "Order Summary");
+            return RedirectToPage("CompleteOrder",new { summary = summaryMessage.ToString() });
         }
     }
 }

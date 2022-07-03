@@ -11,13 +11,13 @@
             <h4> List of all orders</h4>
         </p>
 
-        <table class="table">
+        <table class="table"  style="text-align:center">
             <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Email</th>
-                    <th>Items</th>
-                    <th>Total</th>
+                    <th class="align-middle">Order ID</th>
+                    <th class="align-middle">Email</th>
+                    <th class="align-middle">Items</th>
+                    <th class="align-middle">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +32,7 @@
                               {
                                   <li>
                                       <div class="alert alert-info" role="alert">
+                                          <span>@item.Product.MakerName  @item.Product.SubName</span>
                                           <span class="badge bg-success">
                                               @item.Amount
                                           </span>[@item.Price.ToString("C")]

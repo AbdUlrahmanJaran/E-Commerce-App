@@ -3,28 +3,50 @@
 @{
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<h1>All Products</h1>
-
-@foreach (var product in @Model.Products)
-    {
-        <div class="card" style="width: 18rem;">
-          <img style="width: 100px" src="@product.URL" class="card-img-top" alt="...">
-
-          <div class="card-body">
-                <h5 class="card-title"> @product.SubName </h5>
-                <p class="card-text"> @product.MakerName </p>
-                <a asp-page="Details" asp-route-id="@product.Id">Details</a>
-
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <form method="post">
-                    <input hidden type="number" name="productId" value="@product.Id" />
-                        <button tybe="submit">Add To Cart</button>
-                    </form>
-                }
-          </div>
-        </div>
-    }
-
-
-
+<div>
+    <h2 style="text-align:center">All Products</h2>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        @foreach (var product in @Model.Products)
+        {
+            <div class="col-sm-8 col-lg-3 col-lg-2" style="padding : 5px ">
+              <div class="card text-black">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/3.webp"
+                  class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <div class="text-center">
+                    <h5 class="card-title">@product.SubName</h5>
+                    <p class="text-muted mb-4">@product.MakerName</p>
+                  </div>
+                  <div>
+                    <div class="d-flex justify-content-between">
+                      <span>Category: </span><span>@product.Category.Name</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <span>Price: </span><span>@product.Price$</span>
+                    </div>
+                  </div>
+                      @if (User.Identity.IsAuthenticated)
+                      {
+                          <div class="d-flex justify-content-between align-items-center font-weight-bold mt-4">
+                              <a asp-page="Details" asp-route-id="@product.Id" style="color:#646FD4">Details</a>
+                              <form method="post">
+                              <input hidden type="number" name="productId" value="@product.Id" />
+                                  <button class="btn-lg btn-block" tybe="submit" style="font-size: 12px; background-color:#646FD4">Add To Cart</button>
+                              </form>
+                          </div>
+                      }
+                      else
+                      {
+                          <div class="d-flex justify-content-center font-weight-bold mt-4">
+                              <a asp-page="Details" asp-route-id="@product.Id">Details</a>
+                          </div>
+                      }
+                  
+                </div>
+              </div>
+            </div>
+        }
+    </div>
+</div>
